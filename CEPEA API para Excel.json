@@ -1,0 +1,155 @@
+{
+  "name": "CEPEA API para Excel",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -16
+      ],
+      "id": "3259ccf9-8657-4fa7-b0a1-a2efb646d429",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.cepea.org.br/br/widgetproduto.js.php?fonte=arial&tamanho=10&largura=400px&corfundo=dbd6b2&cortexto=333333&corlinha=ede7bf&id_indicador%5B%5D=54&id_indicador%5B%5D=91&id_indicador%5B%5D=50&id_indicador%5B%5D=149&id_indicador%5B%5D=35&id_indicador%5B%5D=53&id_indicador%5B%5D=308&id_indicador%5B%5D=8&id_indicador%5B%5D=3&id_indicador%5B%5D=2&id_indicador%5B%5D=23&id_indicador%5B%5D=24&id_indicador%5B%5D=162&id_indicador%5B%5D=208&id_indicador%5B%5D=75&id_indicador%5B%5D=211&id_indicador%5B%5D=101&id_indicador%5B%5D=104&id_indicador%5B%5D=209&id_indicador%5B%5D=119&id_indicador%5B%5D=76&id_indicador%5B%5D=210&id_indicador%5B%5D=100&id_indicador%5B%5D=103&id_indicador%5B%5D=381-56&id_indicador%5B%5D=381-124&id_indicador%5B%5D=381-405&id_indicador%5B%5D=381-61&id_indicador%5B%5D=381-428&id_indicador%5B%5D=381-413&id_indicador%5B%5D=381-1&id_indicador%5B%5D=381-380&id_indicador%5B%5D=380-56&id_indicador%5B%5D=380-417&id_indicador%5B%5D=380-138&id_indicador%5B%5D=380-405&id_indicador%5B%5D=380-61&id_indicador%5B%5D=380-428&id_indicador%5B%5D=380-413&id_indicador%5B%5D=380-1&id_indicador%5B%5D=380-380&id_indicador%5B%5D=378-61&id_indicador%5B%5D=378-420&id_indicador%5B%5D=181&id_indicador%5B%5D=130&id_indicador%5B%5D=leitep&id_indicador%5B%5D=72&id_indicador%5B%5D=77&id_indicador%5B%5D=305-BA&id_indicador%5B%5D=305-CE&id_indicador%5B%5D=305-MS&id_indicador%5B%5D=305-MT&id_indicador%5B%5D=305-PR&id_indicador%5B%5D=305-RS&id_indicador%5B%5D=305-SP&id_indicador%5B%5D=159-Bastos+(SP)+-+FOB-branco&id_indicador%5B%5D=159-Grande+BH+-+(MG)+-+CIF-branco&id_indicador%5B%5D=159-Grande+SP+(SP)+-+CIF-branco&id_indicador%5B%5D=159-Recife+(PE)+-+CIF-branco&id_indicador%5B%5D=159-S.+M.+de+Jetib%C3%A1+(ES)+-+FOB-branco&id_indicador%5B%5D=159-Bastos+(SP)+-+FOB-vermelho&id_indicador%5B%5D=159-Grande+BH+-+(MG)+-+CIF-vermelho&id_indicador%5B%5D=159-Grande+SP+(SP)+-+CIF-vermelho&id_indicador%5B%5D=159-Recife+(PE)+-+CIF-vermelho&id_indicador%5B%5D=159-S.+M.+de+Jetib%C3%A1+(ES)+-+FOB-vermelho&id_indicador%5B%5D=12&id_indicador%5B%5D=92&id_indicador%5B%5D=129-10&id_indicador%5B%5D=129-6&id_indicador%5B%5D=129-4&id_indicador%5B%5D=129-5&id_indicador%5B%5D=129-1&id_indicador%5B%5D=124&id_indicador%5B%5D=349-GL&id_indicador%5B%5D=349-MG&id_indicador%5B%5D=349-NP&id_indicador%5B%5D=349-OP&id_indicador%5B%5D=349-TA&id_indicador%5B%5D=178&id_indicador%5B%5D=179",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+            },
+            {
+              "name": "Referer",
+              "value": "https://www.cepea.esalq.usp.br/"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "0a0bb4f8-9000-4957-87f8-61a5d61ed0df",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obter o HTML da resposta\nlet html = $input.first().json.data;\n\n// Se vier com document.write, extrair o conteúdo\nif (html.includes('document.write')) {\n  const match = html.match(/document\\.write\\(`(.+)`\\)/s);\n  if (match) {\n    html = match[1];\n  }\n}\n\n// Função para decodificar entidades HTML\nfunction decodeHtml(text) {\n  const entities = {\n    '&Atilde;': 'Ã',\n    '&pound;': '£',\n    '&sect;': '§',\n    '&uacute;': 'ú',\n    '&aacute;': 'á',\n    '&eacute;': 'é',\n    '&iacute;': 'í',\n    '&oacute;': 'ó',\n    '&ccedil;': 'ç',\n    '&atilde;': 'ã',\n    '&otilde;': 'õ',\n    '&Aacute;': 'Á',\n    '&Eacute;': 'É',\n    '&Iacute;': 'Í',\n    '&Oacute;': 'Ó',\n    '&Uacute;': 'Ú',\n    '&Ccedil;': 'Ç',\n    '&acirc;': 'â',\n    '&ecirc;': 'ê',\n    '&ocirc;': 'ô',\n    '&nbsp;': ' ',\n    '&quot;': '\"',\n    '&amp;': '&',\n    '&lt;': '<',\n    '&gt;': '>',\n    'Â¢': ''\n  };\n  \n  let decoded = text;\n  for (const [entity, char] of Object.entries(entities)) {\n    decoded = decoded.split(entity).join(char);\n  }\n  return decoded;\n}\n\n// Função para formatar valor em Real brasileiro\nfunction formatarReal(valor) {\n  // Remove espaços e caracteres extras\n  let numero = valor.replace(/[^\\d,\\.]/g, '');\n  \n  // Se tem vírgula, já está no formato brasileiro (1.234,56)\n  if (numero.includes(',')) {\n    // Remove pontos (separador de milhar) e mantém vírgula\n    numero = numero.replace(/\\./g, '').replace(',', '.');\n  }\n  \n  // Converte para número\n  const valorNumerico = parseFloat(numero);\n  \n  if (isNaN(valorNumerico)) {\n    return valor; // Retorna original se não conseguir converter\n  }\n  \n  // Formata no padrão brasileiro\n  return valorNumerico.toLocaleString('pt-BR', {\n    minimumFractionDigits: 2,\n    maximumFractionDigits: 2\n  });\n}\n\n// Extrair tbody\nconst tbodyMatch = html.match(/<tbody>([\\s\\S]*?)<\\/tbody>/);\nif (!tbodyMatch) {\n  throw new Error('Não encontrou <tbody> no HTML');\n}\n\nconst tbody = tbodyMatch[1];\n\n// Extrair todas as linhas\nconst rows = tbody.match(/<tr>[\\s\\S]*?<\\/tr>/g);\n\nif (!rows || rows.length === 0) {\n  throw new Error('Não encontrou linhas <tr> no HTML');\n}\n\nconst produtos = [];\n\nfor (const row of rows) {\n  // Extrair data\n  const dataMatch = row.match(/<td>([^<]+)<\\/td>/);\n  if (!dataMatch) continue;\n  \n  const data = dataMatch[1].trim();\n  \n  // Extrair produto\n  const produtoMatch = row.match(/<span class=\"maior\">([^<]+)<\\/span>/);\n  if (!produtoMatch) continue;\n  \n  const produto = decodeHtml(produtoMatch[1].trim());\n  \n  // Extrair unidade\n  const unidadeMatch = row.match(/<span class=\"unidade\">([^<]+)<\\/span>/);\n  if (!unidadeMatch) continue;\n  \n  const unidade = decodeHtml(unidadeMatch[1].trim());\n  \n  // Extrair preço (pega tudo entre último <td> e </td>)\n  const precoMatch = row.match(/<td>([^<]*)<span class=\"maior\">([^<]+)<\\/span><\\/td>\\s*<\\/tr>/);\n  if (!precoMatch) continue;\n  \n  const moeda = decodeHtml(precoMatch[1].trim());\n  const valor = precoMatch[2].trim();\n  \n  // Formatar o valor\n  const valorFormatado = formatarReal(valor);\n  \n  produtos.push({\n    data,\n    produto,\n    unidade,\n    preco: `${moeda} ${valorFormatado}`.trim()\n  });\n}\n\n// Adicionar metadados\nconst agora = new Date();\nconst dataHoraGeracao = agora.toLocaleString('pt-BR', { \n  timeZone: 'America/Sao_Paulo',\n  day: '2-digit',\n  month: '2-digit',\n  year: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit',\n  second: '2-digit'\n});\n\nif (produtos.length === 0) {\n  throw new Error('Nenhum produto foi extraído. Verifique o HTML.');\n}\n\nreturn produtos.map(item => ({\n  json: {\n    ...item,\n    fonte: 'Cepea - www.cepea.esalq.usp.br',\n    gerado_em: dataHoraGeracao\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "aaa12d05-d9da-44aa-b616-960ff990d370",
+      "name": "Code in JavaScript",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {
+          "fileName": "=cepea_precos_{{$now.format('yyyy-MM-dd_HHmm')}}.xlsx"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        256,
+        -16
+      ],
+      "id": "985425e3-ad7e-4565-b7c2-2e29a4d4fd0c",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "content": "### 🧾 Fluxo: **CEPEA API para Excel**\n\nEste fluxo acessa automaticamente a **API do Cepea (ESALQ/USP)**, extrai as **cotações diárias de produtos agropecuários** (como algodão, arroz, milho, boi gordo, entre outros), **processa o HTML retornado** e **gera um arquivo Excel (.xlsx)** com todas as informações formatadas.\n\nO fluxo pode ser executado manualmente ou agendado (via **Schedule Trigger**).  \nApós a execução, o **node `Convert to File`** transforma os dados JSON em uma planilha Excel.\n\n👉 Para baixar o resultado:  \nAbra o node **Convert to File** → vá até a aba **Binary Data** → clique em **Download** para obter o arquivo gerado.\n\n",
+        "height": 480,
+        "width": 1008,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -448,
+        -304
+      ],
+      "typeVersion": 1,
+      "id": "2580e5a9-762f-424b-98ee-c8d5cdb0c22d",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9d72333b-65a2-492b-b1d1-ee559cc49d09",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "84f94f699086c1831c4aa37e2a87e6aec3b200a5dc913dce0cdab3aaea1c4c8f"
+  },
+  "id": "9no18YrSwoVS1Sxw",
+  "tags": []
+}
